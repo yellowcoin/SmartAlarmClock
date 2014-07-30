@@ -2,8 +2,9 @@
 // Copyright 2014 Tony DiCola (tony@tonydicola.com)
 // Released under an MIT license (http://opensource.org/licenses/MIT)
 
+#include <SPI.h>
 #include <TouchScreen.h> 
-#include <TFTShield.h>
+#include <TFTv2.h>
 #include <Process.h>
 
 // Functionality:
@@ -57,8 +58,8 @@
 // Clock display configuration.
 // You don't need to change these values.
 #define CLOCK_COLOR        CYAN
-#define CLOCK_CENTER_X     MAX_X/2 - 20
-#define CLOCK_CENTER_Y     MAX_Y/4 + 20
+#define CLOCK_CENTER_X     MAX_X/2 - 18
+#define CLOCK_CENTER_Y     MAX_Y/4 + 22
 #define CLOCK_RADIUS       100
 #define CLOCK_TICK_SIZE    10
 #define REFRESH_X          MAX_X-230
@@ -85,7 +86,7 @@ void setup()
   Bridge.begin();
   Serial.begin(9600);
   // Initialize display and set orientation.
-  Tft.init();
+  Tft.TFTinit();
   Tft.setDisplayDirect(UP2DOWN);
   // Display a loading message.
   Tft.drawString("LOADING...", MAX_X-10, 10, 3, CLOCK_COLOR);
@@ -325,7 +326,7 @@ void check_mail_alarm() {
 
 // Draw the display for the specified time and alarm time.
 void draw_display(int time, int alarmTime) {
-  Tft.paintScreenBlack();
+  Tft.fillScreen();
   char timeString[9];
   // Draw time text.
   time_to_string(time, timeString);
